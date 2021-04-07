@@ -2,6 +2,10 @@
   "name": "react-native-gifted-chat",
   "version": "2.6.5",
   "description": "The most complete chat UI for React Native",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FaridSafi/react-native-gifted-chat.git"
+  },
   "keywords": [
     "android",
     "ios",
@@ -12,13 +16,26 @@
     "message",
     "chat"
   ],
-  "homepage": "https://github.com/FaridSafi/react-native-gifted-chat#readme",
   "bugs": {
     "url": "https://github.com/FaridSafi/react-native-gifted-chat/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FaridSafi/react-native-gifted-chat.git"
+  "homepage": "https://github.com/FaridSafi/react-native-gifted-chat#readme",
+  "scripts": {
+	  "prepack":"yarn build",
+    "config:dev": "json -I -f package.json -e 'this.main=\"lib/index.js\"'",
+    "config:npm": "json -I -f package.json -e 'this.main=\"lib/index.js\"'",
+    "lint": "tslint --project .",
+    "lint:fix": "./node_modules/.bin/tslint ./src/**/*.{ts,tsx} --fix",
+    "tsc": "node_modules/.bin/tsc --noEmit",
+    "start": "yarn config:dev && expo start",
+    "start:web": "yarn config:dev && expo start -w --dev",
+    "build": "rm -rf lib/ && node_modules/.bin/tsc && cp flow-typedefs/*.js.flow lib/",
+    "test": "TZ=Europe/Paris jest --no-watchman",
+    "test:watch": "TZ=Europe/Paris jest --watch",
+    "test:coverage": "TZ=Europe/Paris jest --coverage",
+    "prepublishOnly": "yarn lint && yarn build && yarn test && yarn config:npm",
+    "postpublish": "yarn config:dev",
+    "prettier": "./node_modules/.bin/prettier --write \"src/**/*.{ts,tsx}\""
   },
   "license": "MIT",
   "author": "Farid Safi",
@@ -29,21 +46,7 @@
     "src",
     "lib"
   ],
-  "scripts": {
-    "build": "rm -rf lib/ && yarn tsc",
-    "lint": "yarn eslint src",
-    "lint:fix": "yarn eslint --cache --fix",
-    "prepublishOnly": "yarn lint && yarn build && yarn test",
-    "start": "cd example && expo start",
-    "start:web": "cd example && expo start -w --dev",
-    "test": "TZ=Europe/Paris jest --no-watchman",
-    "test:coverage": "TZ=Europe/Paris jest --coverage",
-    "test:watch": "TZ=Europe/Paris jest --watch",
-    "tsc:write": "yarn tsc --project tsconfig.json",
-    "tsc:watch": "yarn tsc --watch --noEmit",
-    "fresh": "yarn start --reset-cache",
-    "prepare": "yarn husky"
-  },
+
   "lint-staged": {
     "src/*.{json,js,jsx,ts,tsx}": [
       "yarn lint:fix",
