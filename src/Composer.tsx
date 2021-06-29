@@ -87,24 +87,22 @@ export default class Composer extends React.Component<ComposerProps> {
     maxComposerHeight:PropTypes.number
   }
 
-  layout?: { width: number; height: number } = undefined
+  contentSize?: { width: number; height: number } = undefined
 
   onLayout = (e: any) => {
     const { contentSize } = e.nativeEvent
     const layout = contentSize
     // Support earlier versions of React Native on Android.
-    if (!layout) {
-      return
+    if (!contentSize) {
+        return;
     }
 
-    if (
-      !this.layout ||
-      (this.layout &&
-        (this.layout.width !== layout.width ||
-          this.layout.height !== layout.height))
-    ) {
-      this.layout = layout
-      this.props.onInputSizeChanged!(this.layout!)
+    if (!this.contentSize ||
+        (this.contentSize &&
+            (this.contentSize.width !== contentSize.width ||
+                this.contentSize.height !== contentSize.height))) {
+        this.contentSize = contentSize;
+        this.props.onInputSizeChanged(this.contentSize);
     }
   }
 
