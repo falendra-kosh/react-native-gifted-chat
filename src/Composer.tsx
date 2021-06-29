@@ -76,24 +76,21 @@ export default class Composer extends React.Component<ComposerProps> {
     keyboardAppearance: PropTypes.string,
   }
 
-  layout?: { width: number; height: number } = undefined
+  contentSize?: { width: number; height: number } = undefined
 
   onLayout = (e: any) => {
-    const { layout } = e.nativeEvent
-
+     const { contentSize } = e.nativeEvent;
     // Support earlier versions of React Native on Android.
-    if (!layout) {
-      return
+    if (!contentSize) {
+        return;
     }
 
-    if (
-      !this.layout ||
-      (this.layout &&
-        (this.layout.width !== layout.width ||
-          this.layout.height !== layout.height))
-    ) {
-      this.layout = layout
-      this.props.onInputSizeChanged!(this.layout!)
+    if (!this.contentSize ||
+        (this.contentSize &&
+            (this.contentSize.width !== contentSize.width ||
+                this.contentSize.height !== contentSize.height))) {
+        this.contentSize = contentSize;
+        this.props.onInputSizeChanged(this.contentSize);
     }
   }
 
@@ -127,6 +124,7 @@ export default class Composer extends React.Component<ComposerProps> {
             }),
           },
         ]}
+        onContentSizeChange={this.onLayout}
         autoFocus={this.props.textInputAutoFocus}
         value={this.props.text}
         enablesReturnKeyAutomatically
