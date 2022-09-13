@@ -87,6 +87,7 @@ export interface MessageContainerProps<TMessage extends IMessage> {
   onQuickReply?(replies: Reply[]): void
   infiniteScroll?: boolean
   isLoadingEarlier?: boolean
+  searchMsgId: number;
 }
 
 interface State {
@@ -117,6 +118,7 @@ export default class MessageContainer<
     scrollToBottomStyle: {},
     infiniteScroll: false,
     isLoadingEarlier: false,
+    searchMsgId:0
   }
 
   static propTypes = {
@@ -139,6 +141,7 @@ export default class MessageContainer<
     alignTop: PropTypes.bool,
     scrollToBottomStyle: StylePropType,
     infiniteScroll: PropTypes.bool,
+    searchMsgId:PropTypes.number
   }
 
   state = {
@@ -146,6 +149,10 @@ export default class MessageContainer<
     hasScrolled: false,
   }
 
+  componentDidMount() {
+    this.props.forwardRef?.current?.scrollToIndex({index:this.props.searchMsgId,animated:true, viewPosition:1})  
+    
+  }
   renderTypingIndicator = () => {
     if (Platform.OS === 'web') {
       return null
