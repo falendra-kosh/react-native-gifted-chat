@@ -87,7 +87,7 @@ export interface MessageContainerProps<TMessage extends IMessage> {
   onQuickReply?(replies: Reply[]): void
   infiniteScroll?: boolean
   isLoadingEarlier?: boolean
-  searchMsgId: number;
+  searchMsgId: number
 }
 
 interface State {
@@ -118,7 +118,7 @@ export default class MessageContainer<
     scrollToBottomStyle: {},
     infiniteScroll: false,
     isLoadingEarlier: false,
-    searchMsgId:0
+    searchMsgId: 0,
   }
 
   static propTypes = {
@@ -141,7 +141,7 @@ export default class MessageContainer<
     alignTop: PropTypes.bool,
     scrollToBottomStyle: StylePropType,
     infiniteScroll: PropTypes.bool,
-    searchMsgId:PropTypes.number
+    searchMsgId: PropTypes.number,
   }
 
   state = {
@@ -150,8 +150,11 @@ export default class MessageContainer<
   }
 
   componentDidMount() {
-    this.props.forwardRef?.current?.scrollToIndex({index:this.props.searchMsgId,animated:true, viewPosition:1})  
-    
+    this.props.forwardRef?.current?.scrollToIndex({
+      index: this.props.searchMsgId,
+      animated: true,
+      viewPosition: 1,
+    })
   }
   renderTypingIndicator = () => {
     if (Platform.OS === 'web') {
@@ -374,6 +377,12 @@ export default class MessageContainer<
           onEndReached={this.onEndReached}
           onEndReachedThreshold={0.1}
           {...this.props.listViewProps}
+          onScrollToIndexFailed={info => {
+            const wait = new Promise(resolve => setTimeout(resolve, 500));
+            wait.then(() => {
+                this.props?.forwardRef?.current?.scrollToIndex({ index:this.props.searchMsgId , animated: true });
+            }).catch(err => console.log(err));
+        }}
         />
       </View>
     )
