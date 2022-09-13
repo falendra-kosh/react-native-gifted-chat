@@ -377,12 +377,17 @@ export default class MessageContainer<
           onEndReached={this.onEndReached}
           onEndReachedThreshold={0.1}
           {...this.props.listViewProps}
-          onScrollToIndexFailed={info => {
-            const wait = new Promise(resolve => setTimeout(resolve, 500));
-            wait.then(() => {
-                this.props?.forwardRef?.current?.scrollToIndex({ index:this.props.searchMsgId , animated: true });
-            }).catch(err => console.log(err));
-        }}
+          onScrollToIndexFailed={() => {
+            const wait = new Promise(resolve => setTimeout(resolve, 500))
+            wait
+              .then(() => {
+                this.props?.forwardRef?.current?.scrollToIndex({
+                  index: this.props.searchMsgId,
+                  animated: true,
+                })
+              })
+              .catch(err => console.log(err))
+          }}
         />
       </View>
     )
