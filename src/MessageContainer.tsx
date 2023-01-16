@@ -150,11 +150,13 @@ export default class MessageContainer<
   }
 
   componentDidMount() {
-    this.props.forwardRef?.current?.scrollToIndex({
-      index: this.props.searchMsgId,
-      animated: true,
-      viewPosition: 1,
-    })
+    if(this.props.messages?.length){
+      this.props.forwardRef?.current?.scrollToIndex({
+        index: this.props.searchMsgId,
+        animated: true,
+        viewPosition: 1,
+      })
+    }
   }
   renderTypingIndicator = () => {
     if (Platform.OS === 'web') {
@@ -381,10 +383,12 @@ export default class MessageContainer<
             const wait = new Promise(resolve => setTimeout(resolve, 500))
             wait
               .then(() => {
-                this.props?.forwardRef?.current?.scrollToIndex({
-                  index: this.props.searchMsgId,
-                  animated: true,
-                })
+                if(this.props.messages?.length){
+                  this.props?.forwardRef?.current?.scrollToIndex({
+                    index: this.props.searchMsgId,
+                    animated: true,
+                  })
+                }
               })
               .catch(err => console.log(err))
           }}
