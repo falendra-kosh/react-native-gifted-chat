@@ -99,8 +99,10 @@ export default class Message<
   }
 
   shouldComponentUpdate(nextProps: MessageProps<TMessage>) {
-
-    if (this.props.indexNumber == this.props.searchMsgId && this.props.indexNumber !== 0) {
+    if (
+      this.props.indexNumber === this.props.searchMsgId &&
+      this.props.indexNumber !== 0
+    ) {
       return true
     }
 

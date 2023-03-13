@@ -106,8 +106,8 @@ export default class MessageContainer<
     renderChatEmpty: null,
     renderFooter: null,
     renderMessage: null,
-    onLoadEarlier: () => { },
-    onQuickReply: () => { },
+    onLoadEarlier: () => {},
+    onQuickReply: () => {},
     inverted: true,
     loadEarlier: false,
     listViewProps: {},
@@ -259,7 +259,7 @@ export default class MessageContainer<
         previousMessage,
         inverted,
         nextMessage,
-        indexNumber:index,
+        indexNumber: index,
         position: item.user._id === user._id ? 'right' : 'left',
       }
 
@@ -355,8 +355,7 @@ export default class MessageContainer<
         viewPosition: 1,
       })
     }
-}
-
+  }
 
   render() {
     const { inverted } = this.props

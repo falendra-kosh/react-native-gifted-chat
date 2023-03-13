@@ -183,7 +183,7 @@ export default class Bubble<
     renderMessageVideo: null,
     renderMessageAudio: null,
     renderMessageText: null,
-    renderReplyView: null ,
+    renderReplyView: null,
     renderCustomView: null,
     shareButton: null,
     renderUsername: null,
@@ -379,12 +379,12 @@ export default class Bubble<
   }
 
   renderReplyView() {
-    if(this.props.renderReplyView){
-        return this.props.renderReplyView(this.props)
+    if (this.props.renderReplyView) {
+      return this.props.renderReplyView(this.props)
     }
 
     return null
-}
+  }
 
   renderMessageImage() {
     if (this.props.currentMessage && this.props.currentMessage.image) {
