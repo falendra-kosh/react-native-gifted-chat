@@ -72,6 +72,7 @@ export interface MessageContainerProps<TMessage extends IMessage> {
   inverted?: boolean
   loadEarlier?: boolean
   alignTop?: boolean
+  scrollFlag?: boolean
   scrollToBottom?: boolean
   scrollToBottomStyle?: StyleProp<ViewStyle>
   invertibleScrollViewProps?: any
@@ -115,6 +116,7 @@ export default class MessageContainer<
     scrollToBottom: false,
     scrollToBottomOffset: 200,
     alignTop: false,
+    scrollFlag: false,
     scrollToBottomStyle: {},
     infiniteScroll: false,
     isLoadingEarlier: false,
@@ -139,6 +141,7 @@ export default class MessageContainer<
     scrollToBottomOffset: PropTypes.number,
     scrollToBottomComponent: PropTypes.func,
     alignTop: PropTypes.bool,
+    scrollFlag: PropTypes.bool,
     scrollToBottomStyle: StylePropType,
     infiniteScroll: PropTypes.bool,
     searchMsgId: PropTypes.number,
@@ -150,7 +153,7 @@ export default class MessageContainer<
   }
 
   componentDidMount() {
-    if(this.props.messages?.length){
+    if (this.props.messages?.length) {
       this.props.forwardRef?.current?.scrollToIndex({
         index: this.props.searchMsgId,
         animated: true,
@@ -256,6 +259,7 @@ export default class MessageContainer<
         previousMessage,
         inverted,
         nextMessage,
+        indexNumber: index,
         position: item.user._id === user._id ? 'right' : 'left',
       }
 
@@ -343,8 +347,21 @@ export default class MessageContainer<
 
   keyExtractor = (item: TMessage) => `${item._id}`
 
+  scrollToMessage() {
+    if (this.props.messages?.length) {
+      this.props.forwardRef?.current?.scrollToIndex({
+        index: this.props.searchMsgId,
+        animated: true,
+        viewPosition: 1,
+      })
+    }
+  }
+
   render() {
     const { inverted } = this.props
+    if (this.props.scrollFlag) {
+      this.scrollToMessage()
+    }
     return (
       <View
         style={
@@ -383,7 +400,7 @@ export default class MessageContainer<
             const wait = new Promise(resolve => setTimeout(resolve, 500))
             wait
               .then(() => {
-                if(this.props.messages?.length){
+                if (this.props.messages?.length) {
                   this.props?.forwardRef?.current?.scrollToIndex({
                     index: this.props.searchMsgId,
                     animated: true,

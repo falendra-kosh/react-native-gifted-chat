@@ -72,6 +72,8 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
   wrapInSafeArea?: boolean
   /* enables the scrollToBottom Component */
   scrollToBottom?: boolean
+  /* enables the scroll for reply Component */
+  scrollFlag?: boolean
   /* Scroll to bottom wrapper style */
   scrollToBottomStyle?: StyleProp<ViewStyle>
   initialText?: string
@@ -161,6 +163,8 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
   renderAvatar?(props: Avatar<TMessage>['props']): React.ReactNode | null
   /* Custom message bubble */
   renderBubble?(props: Bubble<TMessage>['props']): React.ReactNode
+  /* Custom message reply */
+  renderReplyView?(props: Bubble<TMessage>['props']): React.ReactNode | null
   /*Custom system message */
   renderSystemMessage?(props: SystemMessage<TMessage>['props']): React.ReactNode
   /* Callback when a message bubble is long-pressed; default is to show an ActionSheet with "Copy Text" (see example using showActionSheetWithOptions()) */
@@ -241,6 +245,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     text: undefined,
     placeholder: DEFAULT_PLACEHOLDER,
     disableComposer: false,
+    scrollFlag: false,
     messageIdGenerator: () => uuid.v4(),
     user: {},
     onSend: () => {},
@@ -260,6 +265,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     renderUsernameOnMessage: false,
     renderAvatarOnTop: false,
     renderBubble: null,
+    renderReplyView: null,
     renderSystemMessage: null,
     onLongPress: null,
     renderMessage: null,
@@ -311,6 +317,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     initialText: PropTypes.string,
     placeholder: PropTypes.string,
     disableComposer: PropTypes.bool,
+    scrollFlag: PropTypes.bool,
     messageIdGenerator: PropTypes.func,
     user: PropTypes.object,
     onSend: PropTypes.func,
@@ -332,6 +339,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     renderAvatarOnTop: PropTypes.bool,
     isCustomViewBottom: PropTypes.bool,
     renderBubble: PropTypes.func,
+    renderReplyView: PropTypes.func,
     renderSystemMessage: PropTypes.func,
     onLongPress: PropTypes.func,
     renderMessage: PropTypes.func,

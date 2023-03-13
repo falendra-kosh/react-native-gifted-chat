@@ -40,6 +40,8 @@ export interface MessageProps<TMessage extends IMessage> {
   previousMessage?: TMessage
   user: User
   inverted?: boolean
+  searchMsgId: number
+  indexNumber: number
   containerStyle?: LeftRightStyle<ViewStyle>
   renderBubble?(props: Bubble['props']): React.ReactNode
   renderDay?(props: Day['props']): React.ReactNode
@@ -70,6 +72,8 @@ export default class Message<
     inverted: true,
     shouldUpdateMessage: undefined,
     onMessageLayout: undefined,
+    searchMsgId: 0,
+    indexNumber: -1,
   }
 
   static propTypes = {
@@ -83,6 +87,8 @@ export default class Message<
     nextMessage: PropTypes.object,
     previousMessage: PropTypes.object,
     user: PropTypes.object,
+    searchMsgId: PropTypes.number,
+    indexNumber: PropTypes.number,
     inverted: PropTypes.bool,
     containerStyle: PropTypes.shape({
       left: StylePropType,
@@ -93,6 +99,13 @@ export default class Message<
   }
 
   shouldComponentUpdate(nextProps: MessageProps<TMessage>) {
+    if (
+      this.props.indexNumber === this.props.searchMsgId &&
+      this.props.indexNumber !== 0
+    ) {
+      return true
+    }
+
     const next = nextProps.currentMessage!
     const current = this.props.currentMessage!
     const { previousMessage, nextMessage } = this.props
