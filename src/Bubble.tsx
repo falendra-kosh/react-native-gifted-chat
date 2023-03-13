@@ -158,6 +158,7 @@ export interface BubbleProps<TMessage extends IMessage> {
   renderMessageVideo?(props: RenderMessageVideoProps<TMessage>): React.ReactNode
   renderMessageAudio?(props: RenderMessageAudioProps<TMessage>): React.ReactNode
   renderMessageText?(props: RenderMessageTextProps<TMessage>): React.ReactNode
+  renderReplyView?(props: RenderMessageTextProps<TMessage>): React.ReactNode
   renderCustomView?(bubbleProps: BubbleProps<TMessage>): React.ReactNode
   shareButton?(bubbleProps: BubbleProps<TMessage>): React.ReactNode
   renderTime?(timeProps: Time['props']): React.ReactNode
@@ -182,6 +183,7 @@ export default class Bubble<
     renderMessageVideo: null,
     renderMessageAudio: null,
     renderMessageText: null,
+    renderReplyView: null ,
     renderCustomView: null,
     shareButton: null,
     renderUsername: null,
@@ -215,6 +217,7 @@ export default class Bubble<
     renderMessageVideo: PropTypes.func,
     renderMessageAudio: PropTypes.func,
     renderMessageText: PropTypes.func,
+    renderReplyView: PropTypes.func,
     renderCustomView: PropTypes.func,
     isCustomViewBottom: PropTypes.bool,
     renderUsernameOnMessage: PropTypes.bool,
@@ -375,6 +378,14 @@ export default class Bubble<
     return null
   }
 
+  renderReplyView() {
+    if(this.props.renderReplyView){
+        return this.props.renderReplyView(this.props)
+    }
+
+    return null
+}
+
   renderMessageImage() {
     if (this.props.currentMessage && this.props.currentMessage.image) {
       const { containerStyle, wrapperStyle, ...messageImageProps } = this.props
@@ -489,6 +500,7 @@ export default class Bubble<
   renderBubbleContent() {
     return this.props.isCustomViewBottom ? (
       <View>
+        {this.renderReplyView()}
         {this.renderMessageImage()}
         {this.renderMessageVideo()}
         {this.renderMessageAudio()}
@@ -497,6 +509,7 @@ export default class Bubble<
       </View>
     ) : (
       <View>
+        {this.renderReplyView()}
         {this.renderCustomView()}
         {this.renderMessageImage()}
         {this.renderMessageVideo()}
