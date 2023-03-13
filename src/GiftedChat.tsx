@@ -72,8 +72,8 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
   wrapInSafeArea?: boolean
   /* enables the scrollToBottom Component */
   scrollToBottom?: boolean
-   /* enables the scroll for reply Component */
-   scrollFlag?: boolean
+  /* enables the scroll for reply Component */
+  scrollFlag?: boolean
   /* Scroll to bottom wrapper style */
   scrollToBottomStyle?: StyleProp<ViewStyle>
   initialText?: string
@@ -245,15 +245,15 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     text: undefined,
     placeholder: DEFAULT_PLACEHOLDER,
     disableComposer: false,
-    scrollFlag:false,
+    scrollFlag: false,
     messageIdGenerator: () => uuid.v4(),
     user: {},
-    onSend: () => { },
+    onSend: () => {},
     locale: null,
     timeFormat: TIME_FORMAT,
     dateFormat: DATE_FORMAT,
     loadEarlier: false,
-    onLoadEarlier: () => { },
+    onLoadEarlier: () => {},
     isLoadingEarlier: false,
     renderLoading: null,
     renderLoadEarlier: null,
@@ -317,7 +317,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     initialText: PropTypes.string,
     placeholder: PropTypes.string,
     disableComposer: PropTypes.bool,
-    scrollFlag:PropTypes.bool,
+    scrollFlag: PropTypes.bool,
     messageIdGenerator: PropTypes.func,
     user: PropTypes.object,
     onSend: PropTypes.func,
